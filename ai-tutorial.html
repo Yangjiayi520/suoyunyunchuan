@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI教学指导 - 唢韵云传</title>
+    <!-- 复用主站公共资源 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 完全复用主站CSS变量与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #c62e2e;
+            --secondary: #d9b611;
+            --dark: #3a2618;
+            --light: #f8f1e5;
+            --accent: #8e1a1a;
+            --medium: #a86a3d;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f8f1e5" fill-opacity="0.95"/><path d="M0,50 Q25,40 50,50 T100,50 L100,100 L0,100 Z" fill="%23e8d9c0" fill-opacity="0.3"/></svg>');
+            background-size: cover;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式（与主站完全一致） */
+        header {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.2rem;
+            margin-left: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        nav a:hover::after {
+            width: 70%;
+        }
+        
+        /* 按钮样式（复用主站） */
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.5s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            width: 100%;
+        }
+        
+        .btn:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 页面标题（与主站section-title风格统一） */
+        .page-title {
+            text-align: center;
+            margin: 60px 0 40px;
+            position: relative;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+            padding: 0 20px;
+            background: var(--light);
+            position: relative;
+            z-index: 2;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .page-title::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            z-index: 1;
+        }
+        
+        /* 教学内容区域（结构与主站知识模块统一） */
+        .tutorial-content {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 60px;
+        }
+        
+        .tutorial-section {
+            margin-bottom: 50px;
+        }
+        
+        .tutorial-section h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+        }
+        
+        .tutorial-video {
+            width: 100%;
+            max-width: 700px;
+            margin: 30px auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tutorial-list {
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+        
+        .tutorial-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        .tutorial-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+        
+        /* 页脚样式（与主站完全一致） */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+        
+        .footer-section p, .footer-section li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* 响应式设计（与主站一致） */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav li {
+                margin: 5px 10px;
+            }
+            
+            .page-title h1 {
+                font-size: 2rem;
+            }
+            
+            .tutorial-content {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            
+            .page-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航（与主站完全一致） -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">      
+                <img src="images/logo-icon.jpg" alt="唢韵云传定制图标" class="logo-icon">
+                <h1>唢韵云传</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#home">首页</a></li>
+                    <li><a href="index.html#team">实践团队</a></li>
+                    <li><a href="index.html#activities">实践活动</a></li>
+                    <li><a href="index.html#products">文创产品</a></li>
+                    <li><a href="index.html#features">功能体验</a></li>
+                    <li><a href="index.html#media">媒体报道</a></li>
+                    <li><a href="index.html#ai">AI练吹</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <div class="container">
+        <!-- 页面标题（风格与主站统一） -->
+        <div class="page-title">
+            <h1>AI教学指导系统</h1>
+        </div>
+
+        <!-- 教学内容区（结构与主站知识模块统一） -->
+        <div class="tutorial-content">
+            <div class="tutorial-section">
+                <p>跟随视频AI教学，从基础到进阶系统学习：</p>
+                <video class="tutorial-video" controls src="videos/tutorial-master.mp4">
+                    您的浏览器不支持视频播放，请升级浏览器。
+                </video>
+                <h3>核心教学模块：</h3>
+                <ul class="tutorial-list">
+                    <li><strong>基础篇</strong>：指法入门（Do-Re-Mi练习）、呼吸基础</li>
+                    <li><strong>进阶篇</strong>：花舌技巧、苦音运用（《百鸟朝凤》片段）</li>
+                    <li><strong>高阶篇</strong>：咔戏模仿、即兴演奏（婚丧曲目改编）</li>
+                </ul>
+                <p>配套资源：<a href="docs/suona-tech.pdf" target="_blank" class="btn" style="margin-top: 10px;">下载《唢呐技法手册》</a></p>
+            </div>
+        </div>
+
+        <!-- 导航按钮（支持返回AI练吹主界面） -->
+        <div class="nav-buttons" style="justify-content: center;">
+            <a href="index.html#ai" class="btn">返回AI练吹系统</a>
+        </div>
+    </div>
+
+    <!-- 页脚（与主站完全一致） -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>西安理工大学计算机科学与工程学院和机械与精密仪器工程学院联合社会实践团队，致力于绥米唢呐非物质文化遗产的保护、传承与创新发展。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="index.html#home">网站首页</a></li>
+                        <li><a href="index.html#team">实践团队</a></li>
+                        <li><a href="index.html#activities">实践活动</a></li>
+                        <li><a href="index.html#products">文创产品</a></li>
+                        <li><a href="index.html#features">功能体验</a></li>
+                        <li><a href="index.html#ai">AI练吹</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>合作伙伴</h3>
+                    <ul>
+                        <li>绥德县文化馆</li>
+                        <li>米脂县非遗文化传承中心</li>
+                        <li>绥德县团委</li>
+                        <li>米脂县团委</li>
+                        <li>杨家沟革命纪念馆</li>
+                        <li>绥德县革命纪念馆</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 陕西省西安市西安理工大学</p>
+                    <p><i class="fas fa-phone"></i> 029-88881234</p>
+                    <p><i class="fas fa-envelope"></i> suoyun@xaut.edu.cn</p>
+                    <p><i class="fab fa-weixin"></i> 唢韵云传公众号</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 西安理工大学"智赋银州·唢韵云传"社会实践团队 | 传承非遗文化，我们在行动</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 复用主站JavaScript（确保交互一致） -->
+    <script>
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 滚动动画效果（针对教学模块）
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.tutorial-section');
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (sectionTop < windowHeight * 0.85) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // 页面加载初始化（动画触发）
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.tutorial-section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            });
+            
+            setTimeout(() => {
+                window.dispatchEvent(new Event('scroll'));
+            }, 500);
+        });
+    </script>
+</body>
+</html>
